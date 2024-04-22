@@ -1,22 +1,50 @@
-import { BrowserRouter, Link, Route, Routes, NavLink } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+  NavLink,
+  createBrowserRouter,
+  createRoutesFromElements,
+  RouterProvider,
+} from 'react-router-dom'
 import './App.css'
-import About from './Components/About'
-import DedeJonas from './Components/DedeJonas'
+import Gallery from './Components/Gallery'
 import Home from './Components/Home'
-import Sokiai from './Components/Sokiai'
-import TetaZita from './Components/TetaZita'
-import Tralivali from './Components/Tralivali'
-import Users from './Components/Users'
+import Root from './Components/Root'
+// import About from './Components/About'
+// import DedeJonas from './Components/DedeJonas'
+// import Sokiai from './Components/Sokiai'
+// import TetaZita from './Components/TetaZita'
+
+// import Users from './Components/Users'
+import { dataLoader } from './services/fetchimg'
 
 const users = [
   { id: 1, name: 'Jonas' },
   { id: 2, name: 'Petras' },
   { id: 3, name: 'teta' },
 ]
+
 function App() {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Root />}>
+        <Route index element={<Home />}></Route>
+        <Route
+          path="/gallery"
+          element={<Gallery />}
+          loader={dataLoader()}
+        ></Route>
+      </Route>,
+    ),
+  )
+  console.log(dataLoader())
   return (
-    <BrowserRouter>
-      <div class="links">
+    <RouterProvider router={router} />
+    // <BrowserRouter>
+    //   <Routes>
+    /* <div class="links">
         <Link to="/">Home </Link>
 
         <NavLink
@@ -42,18 +70,17 @@ function App() {
             {user.name}
           </Link>
         ))}
-      </div>
-      <Routes>
-        <Route path="/" element={<Home />} />
+      </div> */
+    /* <Route path="/" element={<Home />} />
 
         <Route path="/about" element={<About />} />
         <Route path="/teta" element={<TetaZita />} />
         <Route path="/dede" element={<DedeJonas />} />
         <Route path="/users/:id" element={<Users users={users} />} />
         <Route path="*" element={<h1>404 Page not found</h1>} />
-        <Route path="/dance" component={<Sokiai />} />
-      </Routes>
-    </BrowserRouter>
+        <Route path="/dance" component={<Sokiai />} /> */
+    //   </Routes>
+    // </BrowserRouter>
   )
 }
 
